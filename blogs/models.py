@@ -29,7 +29,7 @@ class Blog(models.Model):
     null=True)
 	tags_names = models.ForeignKey(Tag, on_delete=models.CASCADE,blank=True,
     null=True)
-	
+ 	
 
 class User(models.Model):
     email = models.CharField('email',max_length=50)

@@ -442,6 +442,7 @@ def content(request):
                 category=blog_.category_name,
                 tag=blog_.tags_names)
     user=list(user__.values())[0]
+    # removinf the Poimt instance because it cant be converted to json
     user.pop('point')
     return JsonResponse({'success':True,
       "content":content,
