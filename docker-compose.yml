@@ -12,11 +12,11 @@ services:
     restart: "on-failure"
   web:
     build: . #build the image for the web service from the dockerfile in parent directory
-    command: sh -c "python manage.py makemigrations &&
-                    python manage.py migrate &&
-                    python manage.py initiate_admin &&
-                    python manage.py collectstatic &&
-                    python manage.py loaddata ./dump.json
+    command: sh -c "python3 manage.py makemigrations &&
+                    python3 manage.py migrate &&
+                    python3 manage.py initiate_admin &&
+                    python3 manage.py collectstatic &&
+                    python3 manage.py loaddata ./dump.json
                     gunicorn pixelblog.wsgi:application --bind 0.0.0.0:${APP_PORT}"
     volumes:
       - .:/microservice:rw # map data and files from parent directory in host to microservice directory in docker containe

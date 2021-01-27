@@ -96,7 +96,9 @@ RUN \
         && apk add \
             gdal-dev \
             geos-dev
-RUN pip3 install --upgrade pip
+RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python
+RUN python3 -m ensurepip
+RUN pip3 install --no-cache --upgrade pip setuptools
 # copy project
 COPY . $MICRO_SERVICE
 RUN pip3 install -r requirements.txt
