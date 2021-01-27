@@ -212,11 +212,15 @@ def blog(request):
     user_= User.objects.filter(email=token_.email,
               password=token_.password).first()
     author_name=user_.name
+    blog_=Blog.objects.filter(
+                title=title,
+                author_name=author_name).first()
+    
     #loop with all the tags and categories and update the blog data along with the category
     # and tag associated to that particular blog
     for i,j in zip(tags_names,category_name):
-      tag=Tag.objects.get_or_create(tag_name=i,slug=slug)
-      cat=Category.objects.get_or_create(category_name=j, slug=slug)
+      tag=Tag.objects.get_or_create(tag_name=i,slug=blog_.slug)
+      cat=Category.objects.get_or_create(category_name=j, slug=blog_.slug)
       blog_=Blog.objects.filter(
               category_name=cat[0],
               tags_names=tag[0],
