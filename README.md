@@ -16,7 +16,8 @@ Run directly through terminal->
 $ sudo apt -y install postgresql-12 postgresql-client-12
 $ sudo apt install postgis postgresql-12-postgis-3
 $ sudo apt-get install postgresql-12-postgis-3-scripts
-$ export ENGINE=django.contrib.gis.db.backends.postgis DB_NAME=pixelblog POSTGRES_USER=postgres POSTGRES_PASSWORD=saamiya DB_HOST=127.0.0.1 DB_PORT=5432 APP_PORT=8000 DJANGO_SU_NAME=admin DJANGO_SU_EMAIL=admin12@admin.com DJANGO_SU_PASSWORD=mypass123
+$ export ENGINE=django.contrib.gis.db.backends.postgis DB_NAME=pixelblog POSTGRES_USER=postgres POSTGRES_PASSWORD=postgres DB_HOST=127.0.0.1 DB_PORT=5432 APP_PORT=8000 DJANGO_SU_NAME=admin DJANGO_SU_EMAIL=admin12@admin.com DJANGO_SU_PASSWORD=mypass123
+$ PGPASSWORD=postgres psql -h 127.0.0.1 -U postgres -c 'create database pixelblog;'
 $ pip install virtualenv
 $ virtualenv env
 $ source ./env/bin/activate
