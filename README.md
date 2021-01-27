@@ -32,6 +32,8 @@ C -> POST
 R -> GET
 U -> PUT
 D -> DELETE
+
+
 NOTE: After login call a token is  returned, which is mandatory for all the api call except 'User' call.
 # API Queries
 #### - Login [POST]
@@ -74,10 +76,9 @@ POST /api/v1/pixelblog/blog
 | :--- | :--- | :--- |
 | `tags_names` | `list` | **Required**. Tags |
 | `category_name` | `list` | **Required**. Categories |
-| `slug` | `string` |  Slug |
 | `title` | `string` | **Required**. Title of the blog |
-| `author_name` | `string` | **Required**. Name of the author |
 | `token` | `string` | **Required**. Token |
+| `slug` | `string` | **Optional**. Slug |
 
 ```http
 GET /api/v1/pixelblog/blog
@@ -85,10 +86,10 @@ GET /api/v1/pixelblog/blog
 
 | Parameter | Type | Description |
 | :--- | :--- | :--- |
-| `slug` | `string` |   **Required**. Slug |
 | `title` | `string` | **Required**. Title of the blog |
-| `author_name` | `string` | **Required**. Name of the author |
 | `token` | `string` | **Required**. Token |
+| `slug` | `string` |   **Optional**. Slug |
+
 
 ```http
 PUT /api/v1/pixelblog/blog
@@ -98,10 +99,9 @@ PUT /api/v1/pixelblog/blog
 | :--- | :--- | :--- |
 | `tags_names` | `list` | **Required**. Tags |
 | `category_name` | `list` | **Required**. Categories |
-| `slug` | `string` |   **Required**. Slug |
 | `title` | `string` | **Required**. Title of the blog |
-| `author_name` | `string` | **Required**. Name of the author |
 | `token` | `string` | **Required**. Token |
+| `slug` | `string` |   **Optional**. Slug |
 
 ```http
 DELETE /api/v1/pixelblog/blog
@@ -109,10 +109,10 @@ DELETE /api/v1/pixelblog/blog
 
 | Parameter | Type | Description |
 | :--- | :--- | :--- |
-| `slug` | `string` |   **Required**. Slug |
 | `title` | `string` | **Required**. Title of the blog |
-| `author_name` | `string` | **Required**. Name of the author |
 | `token` | `string` | **Required**. Token |
+| `slug` | `string` |   **Optional**. Slug |
+
 
 #### - CRUD a User [POST/PUT/GET/DELETE]
 ```http
