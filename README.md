@@ -34,6 +34,15 @@ U -> PUT
 D -> DELETE
 
 # API Queries
+#### - Login [POST]
+```http
+POST /api/v1/pixelblog/login
+```
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| `email` | `string` | **Required**. Email |
+| `password` | `string` | **Required**. Password |
 #### - Create a Category [POST]
 ```http
 POST /api/v1/pixelblog/category
