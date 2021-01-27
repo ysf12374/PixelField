@@ -7,7 +7,6 @@ This is a project to create an application using Django REST framework.
 Install and run with docker and docker-compose->
 
 ```sh
-$ docker-compose run web python manage.py loaddata ./dump.json
 $ sudo docker-compose up --build
 ```
 
