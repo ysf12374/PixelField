@@ -27,7 +27,6 @@ $ python manage.py migrate
 $ python manage.py loaddata ./dump.json
 $ python manage.py runserver 127.0.0.1:8000
 ```
- user to create blog posts, categories, tags and users
 Using this application the user can create blog posts, categories, tags, users and comments
 C -> POST
 R -> GET
