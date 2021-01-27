@@ -1,0 +1,10 @@
+django
+django-rest_framework
+django-sslserver
+mysql-connector
+wand
+django-ssl-auth
+psycopg2
+gunicorn
+django-autofixture
+requests
