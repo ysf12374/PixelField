@@ -354,8 +354,7 @@ def comment(request):
               password=password).first()
     #Search for blog
     blog_=Blog.objects.filter(
-              title=title,
-              author_name=author_name).first()
+              title=title).first()
     #check if the blog exists or not
     try:
       if blog_.slug:
