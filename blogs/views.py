@@ -28,7 +28,10 @@ import logging
 import requests as rqs
 from blogs.models import *
 
-
+'''
+login fucntion to check if email pass exists in our database. If yes then give a token
+to be later used for further api calls
+'''
 @csrf_exempt
 def login(request):
   if request.method=='POST' or request.method=='GET':

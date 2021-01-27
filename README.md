@@ -32,7 +32,7 @@ C -> POST
 R -> GET
 U -> PUT
 D -> DELETE
-
+NOTE: After login call a token is  returned, which is mandatory for all the api call except 'User' call.
 # API Queries
 #### - Login [POST]
 ```http
@@ -52,6 +52,8 @@ POST /api/v1/pixelblog/category
 | :--- | :--- | :--- |
 | `category_name` | `string` | **Required**. Category Name |
 | `slug` | `string` | **Required**. Slug belonging to the post to which this category is attached |
+| `token` | `string` | **Required**. Token |
+
 #### - Create a Tag [POST]
 ```http
 POST /api/v1/pixelblog/tag
@@ -61,6 +63,8 @@ POST /api/v1/pixelblog/tag
 | :--- | :--- | :--- |
 | `tag_name` | `string` | **Required**. Tag Name |
 | `slug` | `string` | **Required**. Slug belonging to the post to which this category is attached |
+| `token` | `string` | **Required**. Token |
+
 #### - CRUD a Blog [POST/PUT/GET/DELETE]
 ```http
 POST /api/v1/pixelblog/blog
@@ -73,6 +77,7 @@ POST /api/v1/pixelblog/blog
 | `slug` | `string` |  Slug |
 | `title` | `string` | **Required**. Title of the blog |
 | `author_name` | `string` | **Required**. Name of the author |
+| `token` | `string` | **Required**. Token |
 
 ```http
 GET /api/v1/pixelblog/blog
@@ -83,6 +88,7 @@ GET /api/v1/pixelblog/blog
 | `slug` | `string` |   **Required**. Slug |
 | `title` | `string` | **Required**. Title of the blog |
 | `author_name` | `string` | **Required**. Name of the author |
+| `token` | `string` | **Required**. Token |
 
 ```http
 PUT /api/v1/pixelblog/blog
@@ -95,6 +101,7 @@ PUT /api/v1/pixelblog/blog
 | `slug` | `string` |   **Required**. Slug |
 | `title` | `string` | **Required**. Title of the blog |
 | `author_name` | `string` | **Required**. Name of the author |
+| `token` | `string` | **Required**. Token |
 
 ```http
 DELETE /api/v1/pixelblog/blog
@@ -105,13 +112,14 @@ DELETE /api/v1/pixelblog/blog
 | `slug` | `string` |   **Required**. Slug |
 | `title` | `string` | **Required**. Title of the blog |
 | `author_name` | `string` | **Required**. Name of the author |
+| `token` | `string` | **Required**. Token |
 
 #### - CRUD a User [POST/PUT/GET/DELETE]
 ```http
-POST /api/v1/pixelblog/blog
+POST /api/v1/pixelblog/user
 ```
 ```http
-PUT /api/v1/pixelblog/blog
+PUT /api/v1/pixelblog/user
 ```
 | Parameter | Type | Description |
 | :--- | :--- | :--- |
@@ -121,7 +129,7 @@ PUT /api/v1/pixelblog/blog
 | `address` | `string` | **Required**. Address |
 
 ```http
-GET /api/v1/pixelblog/blog
+GET /api/v1/pixelblog/user
 ```
 | Parameter | Type | Description |
 | :--- | :--- | :--- |
@@ -137,7 +145,7 @@ GET /api/v1/pixelblog/blog
 }
 ```
 ```http
-DELETE /api/v1/pixelblog/blog
+DELETE /api/v1/pixelblog/user
 ```
 | Parameter | Type | Description |
 | :--- | :--- | :--- |
@@ -148,33 +156,36 @@ DELETE /api/v1/pixelblog/blog
 
 #### - Post a Comment or Delete a comment [POST/DELETE]
 ```http
-POST /api/v1/pixelblog/blog
+POST /api/v1/pixelblog/comment
 ```
 | Parameter | Type | Description |
 | :--- | :--- | :--- |
 | `title` | `string` | **Required**. Blog Title |
 | `comment` | `string` | **Required**. Comment |
+| `token` | `string` | **Required**. Token |
 
 ```http
-DELETE /api/v1/pixelblog/blog
+DELETE /api/v1/pixelblog/comment
 ```
 | Parameter | Type | Description |
 | :--- | :--- | :--- |
 | `title` | `string` | **Required**. Blog Title |
 | `comment` | `string` | **Required**. Comment |
+| `token` | `string` | **Required**. Token |
 
 #### - Post Content of a Blog [GET/POST]
 ```http
-POST /api/v1/pixelblog/blog
+POST /api/v1/pixelblog/content
 ```
 ```http
-GET /api/v1/pixelblog/blog
+GET /api/v1/pixelblog/content
 ```
 | Parameter | Type | Description |
 | :--- | :--- | :--- |
 | `content` | `string` | **Required**. Blog Content |
 | `title` | `string` | **Required**. Blog TItle |
 | `slug` | `string` | Slug |
+| `token` | `string` | **Required**. Token |
 
 
 
