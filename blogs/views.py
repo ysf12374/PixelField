@@ -147,19 +147,24 @@ def blog(request):
     if slug=='NoSlug':
       slug=secrets.token_hex(10)
     title=request.GET.get('title', 'NoTitle')
+    # search for user with email and password 
     user_= User.objects.filter(email=token_.email,
               password=token_.password).first()
     author_name=user_.name
+    # search for blog with thte slug title and author name(i.e. users name)
     blog_=Blog.objects.filter(
               slug=slug,
               title=title,
               author_name=author_name).first()
+    #check if blog is there, if yes then return blog exists error
     try:
       if blog_.slug:
         return JsonResponse({'success':False,
           "Status":"Blog title already exists use PUT to Update"})
     except:
       pass
+    # loop between all the tags and categories and store them with the slug of the blog in 
+    # their respective tables.
     for i,j in zip(tags_names,category_name):
       tag=Tag.objects.get_or_create(tag_name=i,slug=slug)
       cat=Category.objects.get_or_create(category_name=j, slug=slug)
@@ -173,12 +178,16 @@ def blog(request):
                 "Status":"Posted succesfully"})
   elif request.method=='GET':
     title=request.GET.get('title', 'NoTitle')
+    # search for user with email and password 
     user_= User.objects.filter(email=token_.email,
               password=token_.password).first()
     author_name=user_.name
+    # search for blog with thte slug title and author name(i.e. users name)
     blog_=Blog.objects.filter(
                   title=title,
                   author_name=author_name).first()
+    # check if blog exists, if yes then collect all tags and categories of the 
+    # blog from their respective tables and return the whole info
     try:
       if blog_.slug:
         category_names=Category.objects.filter(slug=blog_.slug).all()
@@ -199,9 +208,12 @@ def blog(request):
     tags_names=request.GET.getlist('tags_names', 'NoTags')
     category_name=request.GET.getlist('category_name', 'NoCategories')
     title=request.GET.get('title', 'NoTitle')
+    # search for user with email and password 
     user_= User.objects.filter(email=token_.email,
               password=token_.password).first()
     author_name=user_.name
+    #loop with all the tags and categories and update the blog data along with the category
+    # and tag associated to that particular blog
     for i,j in zip(tags_names,category_name):
       tag=Tag.objects.get_or_create(tag_name=i,slug=slug)
       cat=Category.objects.get_or_create(category_name=j, slug=slug)
@@ -218,12 +230,16 @@ def blog(request):
                 "Status":"Updated succesfully"})
   elif request.method=='DELETE':
     title=request.GET.get('title', 'NoTitle')
+    # search for user with email and password 
     user_= User.objects.filter(email=token_.email,
           password=token_.password).first()
     author_name=user_.name
+    # search for blog with thte slug title and author name(i.e. users name)
     blog_=Blog.objects.filter(
               title=title,
               author_name=author_name).first()
+    # search for all the tags and categories associated to that blog 
+    # and loop betwwen them and delete every instance.
     category_names=Category.objects.filter(slug=blog_.slug).all()
     category_names=[x.category_name for x in category_names]
     tags_names=Tag.objects.filter(slug=blog_.slug).all()
@@ -242,9 +258,12 @@ def user(request):
     password=request.GET.get('password', 'No')
     name=request.GET.get('name', 'No')
     address=request.GET.get('address', 'No')
+    # check if any of the info is not passed
     if email=='No' or password=='No' or name=='No' or address=='No':
       return JsonResponse({'success':False,
                   "Status":'Field cannot be empty'})
+    # use position stack('cuz of 25000 free calls') to geocode the given address and use 
+    # 1.1 and 2.2 if it cannot geocode it
     js=rqs.get(f"http://api.positionstack.com/v1/forward?access_key={settings.POSITIONSTACK_KEY}&query={address}")
     try:
       js=js.json()
@@ -253,6 +272,8 @@ def user(request):
     except:
       latitude=1.1
       longitude=2.2
+    # create a record of the user in the database, Using GIS class Point to convert the lat
+    # lon to a POint
     user_ = User.objects.get_or_create(email=email,
               password=password,
               name=name,
@@ -271,6 +292,8 @@ def user(request):
     password=request.GET.get('password', 'NoPassword')
     name=request.GET.get('name', 'NoName')
     address=request.GET.get('address', 'NoAddress')
+    # use position stack('cuz of 25000 free calls') to geocode the given address and use 
+    # 1.1 and 2.2 if it cannot geocode it
     js=rqs.get(f"http://api.positionstack.com/v1/forward?access_key={settings.POSITIONSTACK_KEY}&query={address}")
     try:
       js=js.json()
@@ -281,8 +304,11 @@ def user(request):
       longitude=2.2
       return JsonResponse({'success':False,
                 "Status":"Couldnt convert address to lat lon, pLease provide proper address"})
+    # Create a point using GEOSGeometry with crs 4326
     pnt = GEOSGeometry(f'POINT({longitude} {latitude})', srid=4326)
+    # search for all the users withtin 1 km distance
     qs = User.objects.filter(point__distance_lte=(pnt, D(km=1)))
+    # collect only the name of the user
     users=[x.name for x in qs]
     return JsonResponse({'success':True,
                 "Users in 1 km radius":users,
@@ -319,17 +345,21 @@ def comment(request):
     title=request.GET.get('title', 'NoName')
     author_name=user_.name
     comment=request.GET.get('comment', 'NoName')
+    # seach for the user using the email and pass
     user_= User.objects.filter(email=email,
               password=password).first()
+    #Search for blog
     blog_=Blog.objects.filter(
               title=title,
               author_name=author_name).first()
+    #check if the blog exists or not
     try:
       if blog_.slug:
         pass
     except:
       return JsonResponse({'success':False,
           "Status":"Blog title doesnt exists"})
+    # create a comment recvord
     comment_=Comment.objects.get_or_create(blog=blog_,
               user=user_,
               comment=comment)
@@ -369,12 +399,13 @@ def content(request):
     user__=User.objects.filter(email=token_.email,
               password=token_.password)
     user_= user__.first()
-    email=user_.email#request.GET.get('email', 'NoEmail')
-    password=user_.password#request.GET.get('password', 'NoPassword')
+    email=user_.email
+    password=user_.password
     content=request.GET.get('content', 'NoEmail')
     date_creation=datetime.now()
     title=request.GET.get('title', 'NoName')
     slug=request.GET.get('slug', 'NoSlug')
+    # if slug is passed use it else use the title only
     if slug=='NoSlug':
       blog_=Blog.objects.filter(
               title=title).first()
@@ -382,29 +413,34 @@ def content(request):
       blog_=Blog.objects.filter(
               title=title,
               slug=slug).first()
+    # check if blog title exists or not
     try:
       if blog_.slug:
         pass
     except:
       return JsonResponse({'success':False,
           "Status":"Blog title doesnt exists"})
+    # search for categories nad tags associated to that blog
     category_names=Category.objects.filter(slug=blog_.slug).values()
     tags_names=Tag.objects.filter(slug=blog_.slug).values()
 
     auth=user_.name
     comment_=Comment.objects.filter(blog=blog_)
     comments__=comment_.values()
+    # count the number of comments for the blofg
     comments_count=comment_.count()
+    # count for the number of comments in the blog assocaited to the given user
     is_user_comment_inside=Comment.objects.filter(blog=blog_,user=user_).count()
     if is_user_comment_inside>0:
       is_user_comment_inside=True
     else:
       is_user_comment_inside=False
-    content_=Content.objects.get_or_create(blog=blog_,
-              user=user_,
-              comments_count=comments_count,
-              category=blog_.category_name,
-              tag=blog_.tags_names)
+    if request.method=='POST':
+      content_=Content.objects.get_or_create(blog=blog_,
+                user=user_,
+                comments_count=comments_count,
+                category=blog_.category_name,
+                tag=blog_.tags_names)
     user=list(user__.values())[0]
     user.pop('point')
     return JsonResponse({'success':True,

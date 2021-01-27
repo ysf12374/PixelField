@@ -141,7 +141,7 @@ GET /api/v1/pixelblog/user
 {
 'success':True,
 'Users in 1 km radius':['a','b','v'],
-"Status":"Please Enter Name and Email"
+"Status":"Queried succesfully"
 }
 ```
 ```http
@@ -173,7 +173,7 @@ DELETE /api/v1/pixelblog/comment
 | `comment` | `string` | **Required**. Comment |
 | `token` | `string` | **Required**. Token |
 
-#### - Post Content of a Blog [GET/POST]
+#### - Post/Retreive Content of a Blog [GET/POST]
 ```http
 POST /api/v1/pixelblog/content
 ```
@@ -184,8 +184,8 @@ GET /api/v1/pixelblog/content
 | :--- | :--- | :--- |
 | `content` | `string` | **Required**. Blog Content |
 | `title` | `string` | **Required**. Blog TItle |
-| `slug` | `string` | Slug |
 | `token` | `string` | **Required**. Token |
+| `slug` | `string` | **Optional**.  Slug |
 
 
 
