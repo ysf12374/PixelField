@@ -7,7 +7,7 @@ This is a project to create an application using Django REST framework.
 Install and run with docker and docker-compose->
 
 ```sh
-$ docker-compose run web python manage.py loaddata ./wallet/fixture/data.json
+$ docker-compose run web python manage.py loaddata ./dump.json
 $ sudo docker-compose up --build
 ```
 
@@ -24,7 +24,7 @@ $ source ./env/bin/activate
 $ pip install -r requirements.txt
 $ python manage.py makemigrations
 $ python manage.py migrate
-$ python manage.py loaddata ./pixelblog/fixture/data.json
+$ python manage.py loaddata ./dump.json
 $ python manage.py runserver 127.0.0.1:8000
 ```
  user to create blog posts, categories, tags and users
